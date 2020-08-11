@@ -2,11 +2,19 @@ import React, {useState} from "react";
 
 function App() {
 
-  const [headingText, setHeadingText] = useState();
+  const [headingText, setHeadingText] = useState("");
+  const [name, setName] = useState("");
   const [mouseStatus, setMouseStatus] = useState(false);
 
   function updateHeading(event){
-    setHeadingText(event.target.value)
+    setName(event.target.value)
+  }
+
+  function updateName(event){
+    setHeadingText(name);
+
+    //prevents default form submission
+    event.preventDefault();
   }
 
   function onMouseOver(){
@@ -17,15 +25,24 @@ function App() {
     setMouseStatus(false);
   }
 
+
+
   return (
     <div className="container">
       <h1>Hello {headingText}!</h1>
-      <input onChange={updateHeading} type="text" placeholder="What's your name?" />
-      <button onMouseOver={onMouseOver} 
-      onMouseOut={onMouseOut}
-      style={{backgroundColor: mouseStatus ? "black":"white"}}
-      >
-      Submit</button>
+      <form onSubmit={updateName}>
+        <input 
+        onChange={updateHeading}
+        type="text" placeholder="What's your name?" />
+
+        <button
+        onClick={updateName} 
+        onMouseOver={onMouseOver} 
+        onMouseOut={onMouseOut}
+        style={{backgroundColor: mouseStatus ? "black":"white"}}
+        >
+        Submit</button>
+      </form>
     </div>
   );
 }
